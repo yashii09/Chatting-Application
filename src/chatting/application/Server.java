@@ -8,6 +8,7 @@ public class Server extends JFrame implements ActionListener{
     
     JTextField text;
     JPanel a1;
+    Box vertical = Box.createVerticalBox();
     
     Server() {
         
@@ -102,10 +103,23 @@ public class Server extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
        String out = text.getText();
        
+       JLabel output = new JLabel(out);
+       
+       JPanel p2 = new JPanel();
+       p2.add(output);
        
        a1.setLayout(new BorderLayout());
        
        JPanel right = new JPanel(new BorderLayout());
+       right.add(p2, BorderLayout.LINE_END);
+       vertical.add(right);
+       vertical.add(Box.createVerticalStrut(15));
+       
+       a1.add(vertical, BorderLayout.PAGE_START);
+       
+       repaint();
+       invalidate();
+       validate();
     }
     
     public static void main(String args[]) {
