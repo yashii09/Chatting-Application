@@ -1,8 +1,11 @@
 package chatting.application;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.text.*;
 
 public class Server extends JFrame implements ActionListener{
     
@@ -62,13 +65,13 @@ public class Server extends JFrame implements ActionListener{
         p1.add(morevert);
         
         JLabel name = new JLabel("Gaitonde");
-        name.setBounds(110, 15, 100, 10);
+        name.setBounds(110, 15, 100, 15);
         name.setForeground(Color.WHITE);
         name.setFont(new Font("SAN_SERIF", Font.BOLD, 18));
         p1.add(name);
         
         JLabel status = new JLabel("Active Now");
-        status.setBounds(110, 35, 100, 10);
+        status.setBounds(110, 35, 100, 13);
         status.setForeground(Color.WHITE);
         status.setFont(new Font("SAN_SERIF", Font.BOLD, 14));
         p1.add(status);
@@ -103,10 +106,7 @@ public class Server extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
        String out = text.getText();
        
-       JLabel output = new JLabel(out);
-       
-       JPanel p2 = new JPanel();
-       p2.add(output);
+       JPanel p2 = formatLabel(out);
        
        a1.setLayout(new BorderLayout());
        
@@ -117,12 +117,38 @@ public class Server extends JFrame implements ActionListener{
        
        a1.add(vertical, BorderLayout.PAGE_START);
        
+       text.setText("");
+       
        repaint();
        invalidate();
        validate();
     }
     
+    public static JPanel formatLabel(String out){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JLabel output = new JLabel("<html><p style=\"width: 150px\">" + out + "</p></html>");
+        output.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        output.setBackground(new Color(37, 211, 102));
+        output.setOpaque(true);
+        output.setBorder(new EmptyBorder(15, 15, 15, 50));
+        
+        panel.add(output);
+        
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        
+        
+        JLabel time = new JLabel();
+        time.setText(sdf.format(cal.getTime()));
+        
+        panel.add(time);
+        
+        return panel;
+    }
+    
     public static void main(String args[]) {
         new Server();
-    }
+    } 
 }
